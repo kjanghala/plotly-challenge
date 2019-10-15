@@ -15,12 +15,25 @@ function buildMetadata(sample) {
 
 function buildCharts(sample) {
 
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
-    // @TODO: Build a Bubble Chart using the sample data
+  // @TODO: Build a Bubble Chart using the sample data
+
+  var url = `/samples/${sample}`;
+  d3.json(url).then(function(data) {    
+    var x_ids = data.otu_ids; var y_vals = data.sample_values;
+    var color_bub = data.otu_ids; var label_bub = data.otu_labels;
+    var size_bub = data.sample_values; var data = [{
+      x: x_ids, y: y_vals,
+      text: label_bub,
+      mode: 'markers',
+      marker: {color: color_bub, size: size_bub}
+      }];
+
+  Plotly.newPlot('bubble', data);
 
     // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
+
+    
+  });
 }
 
 function init() {
