@@ -10,6 +10,31 @@ function buildMetadata(sample) {
     Object.entries(data).forEach(([key, value]) => {
       metadata.append("p").text(`${key}: ${value}`);
     });
+
+  // bonus because i couldn't deply to heroku :(
+    var freq = data.WFREQ;
+    var data = [{domain: {x: [0, 1], y: [0, 1]}, value: freq,
+    title: {text: "Washing Frequency - Scrubs Per Week"},
+    type: "indicator", mode: "gauge+number",
+    gauge: {
+      axis: {range: [0, 9]}, 
+      steps: [{range: [0, 1], color: "ff0000"},
+              {range: [1, 2], color: "ff4000"},
+              {range: [2, 3], color: "ff8000"},
+              {range: [3, 4], color: "ffbf00"},
+              {range: [4, 5], color: "ffff00"},
+              {range: [5, 6], color: "bfff00"},
+              {range: [6, 7], color: "80ff00"},
+              {range: [7, 8], color: "40ff00"},
+              {range: [8, 9], color: "00ff00"}
+              ],
+      threshold: {line: {color: "black", width: 5},
+      thickness: 0.75, value: freq}}}];
+
+    var gaugeLayout = {width: 600, height: 750, margin: {t: 0, b: 0}};
+    
+    Plotly.newPlot("gauge", data, gaugeLayout);
+  
   });
 };
 
@@ -45,10 +70,10 @@ function buildCharts(sample) {
 
     Plotly.newPlot('pie', data);
 
-    });
   });
-};
+});
 
+}
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
