@@ -21,20 +21,33 @@ function buildCharts(sample) {
   d3.json(url).then(function(data) {    
     var x_ids = data.otu_ids; var y_vals = data.sample_values;
     var color_bub = data.otu_ids; var label_bub = data.otu_labels;
-    var size_bub = data.sample_values; var data = [{
+    var size_bub = data.sample_values;
+    var data = [{
       x: x_ids, y: y_vals,
       text: label_bub,
       mode: 'markers',
       marker: {color: color_bub, size: size_bub}
       }];
 
-  Plotly.newPlot('bubble', data);
+    Plotly.newPlot('bubble', data);
 
     // @TODO: Build a Pie Chart
 
-    
+    d3.json(url).then(function(data) {
+      var x_val = data.sample_values.slice(0,10);
+      var x_label = data.otu_ids.slice(0,10);
+      var hover = data.otu_labels.slice(0,10);
+      var data = [{
+        values : x_val, labels: x_label,
+        hovertext: hover,
+        type: 'pie'
+      }];
+
+    Plotly.newPlot('pie', data);
+
+    });
   });
-}
+};
 
 function init() {
   // Grab a reference to the dropdown select element
